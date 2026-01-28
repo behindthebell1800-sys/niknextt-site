@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<body>
+  <h2>Ask NikNextt</h2>
+  <input id="q" placeholder="Ask anything" />
+  <button onclick="ask()">Ask</button>
+  <pre id="out"></pre>
+
+  <script>
+    async function ask() {
+      const q = document.getElementById("q").value;
+      const out = document.getElementById("out");
+      out.textContent = "Thinking...";
+
+      const res = await fetch("/api/ask", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ question: q })
+      });
+
+      const data = await res.json();
+      out.textContent = data.answer || data.error;
+    }
+  </script>
+</body>
+</html>
